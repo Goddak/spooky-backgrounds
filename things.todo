@@ -1,6 +1,6 @@
 Client:
 	[x] - Make or find a nicer download icon
-	[] - Find a suitable font & apply
+	[x] - Find a suitable font & apply
 	[x] - Update front-end to use new API
 
 Server:

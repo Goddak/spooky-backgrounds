@@ -83,7 +83,8 @@ function App() {
 
 
 	return (
-		<div ref={containerRef} className="h-screen w-screen flex flex-col justify-end items-center bg-center bg-cover">
+		<div ref={containerRef} className="h-screen w-screen flex flex-col justify-between items-center bg-center bg-cover">
+			<h1 className='text-white text-3xl text-opacity-90 p-8'>SPOOKY BG</h1>
 			<div className='flex w-full justify-evenly'>
 				<button className='rounded-full bg-neutral-900/90 p-10 m-6' onClick={setRandomBackground}>
 					<img className="h-10" src="/next-icon.png" alt="Download background" />
