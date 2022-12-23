@@ -14,7 +14,7 @@
 	"build": "npm run buildserver && npm run buildclient",
 	"packageprep": "rm -rf ./dist/ && mkdir ./dist",
 	"package": "npm run packageprep && cp -r ./server/dist/* ./dist && cp -r ./server/node_modules/ ./dist/node_modules && cp -r ./client/build/ ./dist/public && cp -r ./server/public/* ./dist/public",
-	"updateprod": "rm -rf /var/www/html/default && mkdir /var/www/html/default && mv dist/* /var/www/html/default && pm2 restart gdk-server"
+	"updateprod": "rm -rf /var/www/html/spooky-bg && mkdir /var/www/html/spooky-bg && mv dist/* /var/www/html/spooky-bg && pm2 restart SpookyBg"
   },
   "author": "Kris \"Goddak\" Goddard",
   "license": "ISC",
