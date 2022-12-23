@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
+import Utils from '../utils';
 
 type BackgroundData = {
 	count: number;
@@ -28,7 +29,9 @@ async function getImageInfo(folder: string): Promise<{ count: number, filenames:
 	});
 }
 
-getImageInfo(path.join(__dirname, '../../public/backgrounds/')).then(data => {
+
+
+getImageInfo(path.join(__dirname, Utils.generateFilePathForEnv('public/backgrounds/'))).then(data => {
 	console.log('Spooky Backgrounds :: Updated background data');
 	backgrounds = data;
 });
@@ -42,7 +45,7 @@ router.get('/getBackgrounds', async (req: Request, res: Response) => {
 
 router.get('/updateBackgrounds', async (req: Request, res: Response) => {
 	try {
-		let bgData: BackgroundData = await getImageInfo(path.join(__dirname, '../../public/backgrounds/'));
+		let bgData: BackgroundData = await getImageInfo(path.join(__dirname, Utils.generateFilePathForEnv('public/backgrounds/')));
 		backgrounds = bgData;
 		res.send(bgData);
 	} catch (error) {
