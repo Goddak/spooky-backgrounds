@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(logErrors)
 // Serve static files from the "public" directory
 console.log(path.join(__dirname, '../public'))
-app.use(express.static(path.join(__dirname, utils.generateFilePathForEnv('public'))))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // API routes
 app.use("/", backgroundRoutes);
