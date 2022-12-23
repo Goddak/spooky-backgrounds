@@ -1,0 +1,8 @@
+Client:
+	[x] - Make or find a nicer download icon
+	[] - Find a suitable font & apply
+	[x] - Update front-end to use new API
+
+Server:
+	[x] - Create a basic node/express setup
+	[x] - API route to scrape images folder returning `urls[]` & `[].length`

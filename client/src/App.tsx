@@ -1,25 +1,34 @@
 import React, { useEffect, useRef } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
-import dlIcon from "./dl-icon.png";
 
-const bgNames: string[] = [
-	"/bg-1.jpg",
-	"/bg-2.jpg",
-	"/bg-3.jpg",
-	"/bg-4.jpg",
-	"/bg-5.jpg",
-	"/bg-6.jpg",
-	"/bg-7.jpg",
-	"/bg-8.jpg",
-	"/bg-9.jpg",
-	"/bg-10.jpg",
-	"/bg-11.jpg",
-	"/bg-12.jpg",
-	"/bg-13.jpg",
-	"/bg-14.jpg",
-	"/bg-15.jpg",
-];
+type BackgroundData = {
+	count: number;
+	filenames: string[];
+}
+
+class Backgrounds {
+	bgData: BackgroundData = {
+		count: 0,
+		filenames: []
+	}; // Declare the bgData variable
+
+	constructor() {
+		this.getBackgrounds(); // Call the getBackgrounds method when the class is instantiated
+	}
+
+	async getBackgrounds() {
+		try {
+			const response = await axios.get('/getBackgrounds');
+			this.bgData = response.data as BackgroundData; // Save the data to the bgData variable
+		} catch (error) {
+			console.error(error);
+		}
+	}
+}
+
+const currentBackgrounds = new Backgrounds();
 
 async function downloadBackgroundImage(elementRef: React.RefObject<HTMLDivElement>) {
 	// Check if the elementRef is valid and has a non-null current property
@@ -56,15 +65,15 @@ function App() {
 
 	function setRandomBackground(): void {
 		// Ensure that containerRef and bgNames are valid
-		if (!containerRef || !containerRef.current || !bgNames || !bgNames.length) return;
+		if (!containerRef || !containerRef.current || !currentBackgrounds.bgData.filenames || !currentBackgrounds.bgData.count) return;
 
 		// Choose a random background image path
-		const randomIndex = Math.floor(Math.random() * bgNames.length);
-		const randomBgName = bgNames[randomIndex];
+		const randomIndex = Math.floor(Math.random() * currentBackgrounds.bgData.count);
+		const randomBgName = currentBackgrounds.bgData.filenames[randomIndex];
 
 		// Set the background url of the container
 		if (containerRef && containerRef.current) {
-			containerRef.current.style.backgroundImage = `url(${randomBgName})`;
+			containerRef.current.style.backgroundImage = `url(/backgrounds/${randomBgName})`;
 		}
 	}
 
@@ -75,9 +84,11 @@ function App() {
 
 	return (
 		<div ref={containerRef} className="h-screen w-screen flex flex-col justify-end items-center bg-center bg-cover">
-			<div className='flex w-full'>
-				<button className='rounded-full bg-slate-600 text-white py-6 m-6 flex flex-1 justify-center' onClick={setRandomBackground}>Next</button>
-				<button className='rounded-full bg-slate-600 text-white py-4 m-6 ml-0 flex flex-1 justify-center' onClick={() => {
+			<div className='flex w-full justify-evenly'>
+				<button className='rounded-full bg-neutral-900/90 p-10 m-6' onClick={setRandomBackground}>
+					<img className="h-10" src="/next-icon.png" alt="Download background" />
+				</button>
+				<button className='rounded-full bg-neutral-900/90 p-10 m-6' onClick={() => {
 					downloadBackgroundImage(containerRef)
 				}}>
 					<img className="h-10" src="/dl-icon.png" alt="Download background" />
