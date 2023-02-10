@@ -1,8 +1,7 @@
-Client:
-	[x] - Make or find a nicer download icon
-	[x] - Find a suitable font & apply
-	[x] - Update front-end to use new API
+Next Steps:
+	[x] - Remove server code & convert to client only project
+	[x] - Move through images in order NOT random as before
+	[x] - Add new images
+	[] - Make nicer buttons
 
-Server:
-	[x] - Create a basic node/express setup
-	[x] - API route to scrape images folder returning `urls[]` & `[].length`
+
