@@ -23,11 +23,36 @@ const bg22 = "/backgrounds/bg-22.jpg";
 const bg23 = "/backgrounds/bg-23.jpg";
 const bg24 = "/backgrounds/bg-24.jpg";
 const bg25 = "/backgrounds/bg-25.jpg";
+const bg26 = "/backgrounds/bg-26.jpg";
+const bg27 = "/backgrounds/bg-27.jpg";
+const bg28 = "/backgrounds/bg-28.jpg";
+const bg29 = "/backgrounds/bg-29.jpg";
+const bg30 = "/backgrounds/bg-30.jpg";
+const bg31 = "/backgrounds/bg-31.jpg";
+const bg32 = "/backgrounds/bg-32.jpg";
+const bg33 = "/backgrounds/bg-33.jpg";
+const bg34 = "/backgrounds/bg-34.jpg";
+const bg35 = "/backgrounds/bg-35.jpg";
+const bg36 = "/backgrounds/bg-36.jpg";
+const bg37 = "/backgrounds/bg-37.jpg";
+const bg38 = "/backgrounds/bg-38.jpg";
+const bg39 = "/backgrounds/bg-39.jpg";
+const bg40 = "/backgrounds/bg-40.jpg";
+const bg41 = "/backgrounds/bg-41.jpg";
+const bg42 = "/backgrounds/bg-42.jpg";
+const bg43 = "/backgrounds/bg-43.jpg";
+const bg44 = "/backgrounds/bg-44.jpg";
+const bg45 = "/backgrounds/bg-45.jpg";
+const bg46 = "/backgrounds/bg-46.jpg";
+const bg47 = "/backgrounds/bg-47.jpg";
+const bg48 = "/backgrounds/bg-48.jpg";
 
 const backgroundUrls = [
 bg1, bg2, bg3, bg4, bg5, bg6, bg7, bg8, bg9, bg10,
 bg11, bg12, bg13, bg14, bg15, bg16, bg17, bg18, bg19, bg20,
-bg21, bg22, bg23, bg24, bg25
+bg21, bg22, bg23, bg24, bg25, bg26, bg27, bg28, bg29, bg30,
+bg31, bg32, bg33, bg34, bg35, bg36, bg37, bg38, bg39, bg40,
+bg41, bg42, bg43, bg44, bg45, bg46, bg47, bg48
 ];
 
 export default backgroundUrls;
