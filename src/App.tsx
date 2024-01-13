@@ -3,6 +3,56 @@ import './App.css';
 
 import backgroundUrls from './backgrounds';
 
+const getNextImageUrl: (index: number) => string = (index: number) => {
+	if (index === (backgroundUrls.length - 1)) {
+		return backgroundUrls[0];
+	} else {
+		return backgroundUrls[index + 1];
+	}
+}
+
+const getPreviousImageUrl: (index: number) => string = (index: number) => {
+	if (index === 0) {
+		return backgroundUrls[backgroundUrls.length - 1];
+	} else {
+		return backgroundUrls[index - 1];
+	}
+}
+
+const preloadImage: (url: string) => Promise<void> = (url: string) => {
+	return new Promise((resolve) => {
+		const image = new Image();
+		image.src = url;
+		image.onload = (e) => resolve();
+	})
+}
+
+const setBackgroundImage: (elementRef: React.RefObject<HTMLDivElement>, url: string) => void = (elementRef: React.RefObject<HTMLDivElement>, url: string) => {
+	// Ensure that elementRef is valid
+	if (!elementRef || !elementRef.current) return;
+
+	// Set the background url of the container
+	elementRef.current.style.backgroundImage = `url(${url})`;
+}
+
+const updateCounter: (increment: boolean, setFn: React.Dispatch<React.SetStateAction<number>>) => void = (increment: boolean, setFn: React.Dispatch<React.SetStateAction<number>>) => {
+	setFn((prev) => {
+		if (increment) {
+			if (prev === (backgroundUrls.length - 1)) {
+				return 0;
+			} else {
+				return prev + 1;
+			}
+		} else {
+			if (prev === 0) {
+				return backgroundUrls.length - 1;
+			} else {
+				return prev - 1;
+			}
+		}
+	})
+}
+
 async function downloadBackgroundImage(elementRef: React.RefObject<HTMLDivElement>) {
 	// Check if the elementRef is valid and has a non-null current property
 	if (!elementRef || !elementRef.current) {
@@ -34,42 +84,24 @@ async function downloadBackgroundImage(elementRef: React.RefObject<HTMLDivElemen
 }
 
 function App() {
+	// Create a ref to the container element
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [bgIndex, setBgIndex] = useState<number>(0)
 
-	const cachedSetBackground = () => {
-		// Ensure that containerRef is valid
-		if (!containerRef || !containerRef.current) return;
-		
-		console.log('AHH fuck', bgIndex, backgroundUrls[bgIndex])
-		// Set the background url of the container
-		containerRef.current.style.backgroundImage = `url(${backgroundUrls[bgIndex]})`;
+	// Set the background image start index, this should be the index of the first image in the lastest image update.
+	const [bgIndex, setBgIndex] = useState<number>(25 <= backgroundUrls.length ? 25 : 0)
 
-		// Increment the index
-		if (bgIndex === (backgroundUrls.length - 1)) {
-			setBgIndex(0);
-		} else {
-			setBgIndex(bgIndex + 1);
-		}
-	}
-
+	// Set the background image
 	useEffect(() => {
-		cachedSetBackground();
-	}, [])
-
+		setBackgroundImage(containerRef, backgroundUrls[bgIndex]);
+	}, [containerRef, bgIndex])
 
 	return (
 		<div ref={containerRef} className="h-screen w-screen flex flex-col justify-between items-center bg-center bg-cover">
-			<h1 className='text-white text-3xl text-opacity-90 p-8'>SPOOKY BG</h1>
-			<div className='flex w-full justify-evenly'>
-				<button className='rounded-full bg-neutral-900/90 p-10 m-6' >
-					<img className="h-10" src="/next-icon.png" alt="Download background" onClick={cachedSetBackground}/>
-				</button>
-				<button className='rounded-full bg-neutral-900/90 p-10 m-6' onClick={() => {
-					downloadBackgroundImage(containerRef)
-				}}>
-					<img className="h-10" src="/dl-icon.png" alt="Download background" />
-				</button>
+			<h1 className='text-white text-3xl text-opacity-90 mt-2'>SPOOKY BGS</h1>
+			<div className='flex w-full justify-evenly p-2 pt-8 bg-gradient-to-t from-black'>
+				<img className="h-20" src="/previous-icon.svg" alt="Download background" onClick={() => updateCounter(false, setBgIndex)}/>
+				<img className="h-20" src="/download-icon.svg" alt="Download background" onClick={() => {downloadBackgroundImage(containerRef)}}/>
+				<img className="h-20" src="/next-icon.svg" alt="Download background" onClick={() => updateCounter(true, setBgIndex)}/>
 			</div>
 		</div>
 	);
