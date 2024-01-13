@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 import backgroundUrls from './backgrounds';
@@ -27,6 +27,13 @@ const preloadImage: (url: string) => Promise<void> = (url: string) => {
 	})
 }
 
+const preloadSurroundingImages: (index: number) => void = (index: number) => {
+	const nextUrl = getNextImageUrl(index);
+	const previousUrl = getPreviousImageUrl(index);
+	preloadImage(nextUrl);
+	preloadImage(previousUrl);
+}
+
 const setBackgroundImage: (elementRef: React.RefObject<HTMLDivElement>, url: string) => void = (elementRef: React.RefObject<HTMLDivElement>, url: string) => {
 	// Ensure that elementRef is valid
 	if (!elementRef || !elementRef.current) return;
@@ -51,6 +58,7 @@ const updateCounter: (increment: boolean, setFn: React.Dispatch<React.SetStateAc
 			}
 		}
 	})
+	
 }
 
 async function downloadBackgroundImage(elementRef: React.RefObject<HTMLDivElement>) {
@@ -93,6 +101,7 @@ function App() {
 	// Set the background image
 	useEffect(() => {
 		setBackgroundImage(containerRef, backgroundUrls[bgIndex]);
+		preloadSurroundingImages(bgIndex);
 	}, [containerRef, bgIndex])
 
 	return (
