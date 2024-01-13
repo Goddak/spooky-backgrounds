@@ -38,8 +38,19 @@ const setBackgroundImage: (elementRef: React.RefObject<HTMLDivElement>, url: str
 	// Ensure that elementRef is valid
 	if (!elementRef || !elementRef.current) return;
 
-	// Set the background url of the container
-	elementRef.current.style.backgroundImage = `url(${url})`;
+	// fade to black
+	elementRef.current.style.opacity = '0';
+	setTimeout(() => {
+		// Ensure that elementRef is valid
+		if (!elementRef || !elementRef.current) return;
+		// Set the background url of the container
+		elementRef.current.style.backgroundImage = `url(${url})`;
+		// fade back in
+		elementRef.current.style.opacity = '1';
+	}, 250);
+
+	// // Set the background url of the container
+	// elementRef.current.style.backgroundImage = `url(${url})`;
 }
 
 const updateCounter: (increment: boolean, setFn: React.Dispatch<React.SetStateAction<number>>) => void = (increment: boolean, setFn: React.Dispatch<React.SetStateAction<number>>) => {
@@ -105,12 +116,16 @@ function App() {
 	}, [containerRef, bgIndex])
 
 	return (
-		<div ref={containerRef} className="h-screen w-screen flex flex-col justify-between items-center bg-center bg-cover">
-			<h1 className='text-white text-3xl text-opacity-90 mt-2'>SPOOKY BGS</h1>
-			<div className='flex w-full justify-evenly p-2 pt-8 bg-gradient-to-t from-black'>
-				<img className="h-20" src="/previous-icon.svg" alt="Download background" onClick={() => updateCounter(false, setBgIndex)}/>
-				<img className="h-20" src="/download-icon.svg" alt="Download background" onClick={() => {downloadBackgroundImage(containerRef)}}/>
-				<img className="h-20" src="/next-icon.svg" alt="Download background" onClick={() => updateCounter(true, setBgIndex)}/>
+		<div className="app-container h-screen w-screen ">
+			<div className='absolute top-0 left-0 w-full h-full bg-black flex justify-center items-center z-10'>
+				<h1 className='text-white text-3xl text-opacity-90 mt-2'>SPOOKY BGS</h1>
+			</div>
+			<div ref={containerRef} className="relative h-full flex flex-col justify-end items-center bg-center bg-cover transition-opacity z-20">
+				<div className='flex w-full justify-evenly p-2 pt-8 bg-gradient-to-t from-black'>
+					<img className="h-20" src="/previous-icon.svg" alt="Download background" onClick={() => updateCounter(false, setBgIndex)}/>
+					<img className="h-20" src="/download-icon.svg" alt="Download background" onClick={() => {downloadBackgroundImage(containerRef)}}/>
+					<img className="h-20" src="/next-icon.svg" alt="Download background" onClick={() => updateCounter(true, setBgIndex)}/>
+				</div>
 			</div>
 		</div>
 	);
